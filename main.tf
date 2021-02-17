@@ -13,3 +13,18 @@ resource "exoscale_sks_nodepool" "this" {
   instance_type = each.value.instance_type
   size          = each.value.size
 }
+
+resource "null_resource" "wait_for_cluster" {
+  depends_on = [
+    exoscale_sks_cluster.this,
+  ]
+
+  provisioner "local-exec" {
+    command     = var.wait_for_cluster_cmd
+    interpreter = var.wait_for_cluster_interpreter
+
+    environment = {
+      ENDPOINT = exoscale_sks_cluster.this.endpoint
+    }
+  }
+}

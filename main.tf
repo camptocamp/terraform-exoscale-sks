@@ -28,3 +28,12 @@ resource "null_resource" "wait_for_cluster" {
     }
   }
 }
+
+data "external" "kubeconfig" {
+  program = ["sh", "${path.module}/kubeconfig.sh"]
+
+  query = {
+    cluster_name = var.name
+    zone         = var.zone
+  }
+}

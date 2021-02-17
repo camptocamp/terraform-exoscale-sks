@@ -2,8 +2,8 @@
 
 set -e
 
-eval "$(jq -r '@sh "CLUSTER_NAME=\(.cluster_name) ZONE=\(.zone)"')"
+eval "$(jq -r '@sh "CLUSTER_ID=\(.cluster_id) ZONE=\(.zone)"')"
 
-kubeconfig=$(exo sks kubeconfig "$CLUSTER_NAME" admin --group system:masters --zone "$ZONE")
+kubeconfig=$(exo sks kubeconfig "$CLUSTER_ID" admin --group system:masters --zone "$ZONE")
 
 jq -n --arg kubeconfig "$kubeconfig" '{"kubeconfig":$kubeconfig}'

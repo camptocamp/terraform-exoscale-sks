@@ -33,7 +33,7 @@ data "external" "kubeconfig" {
   program = ["sh", "${path.module}/kubeconfig.sh"]
 
   query = {
-    cluster_name = var.name
-    zone         = var.zone
+    cluster_id = exoscale_sks_cluster.this.id
+    zone       = var.zone
   }
 }

@@ -7,3 +7,7 @@ output "kubeconfig" {
 output "nodepools" {
   value = exoscale_sks_nodepool.this
 }
+
+output "this_security_group_id" {
+  value = exoscale_security_group.this.id
+}

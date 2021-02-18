@@ -11,6 +11,37 @@ resource "exoscale_affinity" "this" {
   type = "host anti-affinity"
 }
 
+resource "exoscale_security_group" "this" {
+  name = format("nodepool-%s", var.name)
+}
+
+resource "exoscale_security_group_rule" "nodeport_services" {
+  security_group_id = exoscale_security_group.this.id
+  type              = "INGRESS"
+  protocol          = "TCP"
+  cidr              = "0.0.0.0/0"
+  start_port        = 30000
+  end_port          = 32767
+}
+
+resource "exoscale_security_group_rule" "sks_logs" {
+  security_group_id = exoscale_security_group.this.id
+  type              = "INGRESS"
+  protocol          = "TCP"
+  cidr              = "0.0.0.0/0"
+  start_port        = 10250
+  end_port          = 10250
+}
+
+resource "exoscale_security_group_rule" "calico_traffic" {
+  security_group_id      = exoscale_security_group.this.id
+  type                   = "INGRESS"
+  protocol               = "UDP"
+  user_security_group_id = exoscale_security_group.this.id
+  start_port             = 4789
+  end_port               = 4789
+}
+
 resource "exoscale_sks_nodepool" "this" {
   for_each = var.nodepools
 
@@ -21,6 +52,7 @@ resource "exoscale_sks_nodepool" "this" {
   size          = each.value.size
 
   anti_affinity_group_ids = [exoscale_affinity.this[each.key].id]
+  security_group_ids      = [exoscale_security_group.this.id]
 }
 
 resource "null_resource" "wait_for_cluster" {

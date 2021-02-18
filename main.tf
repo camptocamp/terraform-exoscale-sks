@@ -4,6 +4,13 @@ resource "exoscale_sks_cluster" "this" {
   version = var.kubernetes_version
 }
 
+resource "exoscale_affinity" "this" {
+  for_each = var.nodepools
+
+  name = format("nodepool-%s-%s", var.name, each.key)
+  type = "host anti-affinity"
+}
+
 resource "exoscale_sks_nodepool" "this" {
   for_each = var.nodepools
 
@@ -12,6 +19,8 @@ resource "exoscale_sks_nodepool" "this" {
   name          = each.key
   instance_type = each.value.instance_type
   size          = each.value.size
+
+  anti_affinity_group_ids = [exoscale_affinity.this[each.key].id]
 }
 
 resource "null_resource" "wait_for_cluster" {

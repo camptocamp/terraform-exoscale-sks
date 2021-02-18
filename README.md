@@ -7,7 +7,7 @@ A terraform module to create a managed Kubernetes cluster on Exoscale SKS.
 ```hcl
 module "sks" {
   source  = "camptocamp/sks/exoscale"
-  version = "0.2.0"
+  version = "0.3.0"
 
   name = "test"
   zone = "de-fra-1"

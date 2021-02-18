@@ -13,7 +13,7 @@ module "sks" {
   zone = "de-fra-1"
 
   nodepools = {
-    "routers" = {
+    "router" = {
       instance_type = "medium"
       size          = 2
     },

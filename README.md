@@ -12,6 +12,8 @@ module "sks" {
   name = "test"
   zone = "de-fra-1"
 
+  kubernetes_version = "1.21.3"
+
   nodepools = {
     "router" = {
       instance_type = "medium"

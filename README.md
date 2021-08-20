@@ -2,6 +2,9 @@
 
 A terraform module to create a managed Kubernetes cluster on Exoscale SKS.
 
+This module creates an SKS cluster with one or more node pools. It creates one security group for all instances with the minimum rules recommended in the exoscale documentation. It also creates one anti-affinity group for each node pool. It then automatically retrieves the kubeconfig that allows access to the cluster.
+
+
 ## Usage example
 
 ```hcl

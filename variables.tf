@@ -9,8 +9,8 @@ variable "zone" {
 }
 
 variable "kubernetes_version" {
-  type    = string
-  default = "1.20.2"
+  description = "The kubernetes version to use. See the Exoscale documentation or portal for possible choices."
+  type        = string
 }
 
 variable "nodepools" {

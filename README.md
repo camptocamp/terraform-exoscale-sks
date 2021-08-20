@@ -17,11 +17,11 @@ module "sks" {
 
   nodepools = {
     "router" = {
-      instance_type = "medium"
+      instance_type = "standard.medium"
       size          = 2
     },
     "compute" = {
-      instance_type = "small"
+      instance_type = "standard.small"
       size          = 3
     }
   }

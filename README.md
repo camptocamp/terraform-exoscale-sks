@@ -10,7 +10,7 @@ This module creates an SKS cluster with one or more node pools. It creates one s
 ```hcl
 module "sks" {
   source  = "camptocamp/sks/exoscale"
-  version = "0.3.0"
+  version = "0.3.1"
 
   name = "test"
   zone = "de-fra-1"

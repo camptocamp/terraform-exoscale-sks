@@ -16,6 +16,8 @@ resource "exoscale_security_group" "this" {
 }
 
 resource "exoscale_security_group_rule" "nodeport_services" {
+  count = var.node_ports_world_accessible ? 1 : 0
+
   security_group_id = exoscale_security_group.this.id
   type              = "INGRESS"
   protocol          = "TCP"

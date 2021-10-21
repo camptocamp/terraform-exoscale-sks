@@ -29,3 +29,9 @@ variable "wait_for_cluster_interpreter" {
   type        = list(string)
   default     = ["/bin/sh", "-c"]
 }
+
+variable "node_ports_world_accessible" {
+  description = "Create a security group rule that allows world access to to NodePort services."
+  type        = bool
+  default     = true
+}

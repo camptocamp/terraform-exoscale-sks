@@ -47,14 +47,17 @@ resource "exoscale_security_group_rule" "calico_traffic" {
 resource "exoscale_sks_nodepool" "this" {
   for_each = var.nodepools
 
-  zone          = var.zone
-  cluster_id    = exoscale_sks_cluster.this.id
-  name          = each.key
-  instance_type = each.value.instance_type
-  size          = each.value.size
+  zone            = var.zone
+  cluster_id      = exoscale_sks_cluster.this.id
+  name            = each.key
+  instance_type   = each.value.instance_type
+  instance_prefix = lookup(each.value, "instance_prefix", "pool")
+  disk_size       = lookup(each.value, "disk_size", "50")
+  size            = each.value.size
 
   anti_affinity_group_ids = [exoscale_affinity.this[each.key].id]
   security_group_ids      = [exoscale_security_group.this.id]
+  private_network_ids     = lookup(each.value, "private_network_ids", [])
 }
 
 resource "null_resource" "wait_for_cluster" {

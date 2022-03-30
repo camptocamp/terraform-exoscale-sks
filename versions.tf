@@ -2,7 +2,7 @@ terraform {
   required_providers {
     exoscale = {
       source  = "exoscale/exoscale"
-      version = "~> 0.22"
+      version = "~> 0.33"
     }
     external = {
       source  = "hashicorp/external"

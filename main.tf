@@ -63,6 +63,15 @@ resource "exoscale_sks_nodepool" "this" {
   private_network_ids     = lookup(each.value, "private_network_ids", [])
 }
 
+resource "null_resource" "install_exo" {
+  provisioner "local-exec" {
+    command = <<EOH
+curl -o exo https://github.com/exoscale/cli/releases/download/v1.49.1/exoscale-cli_1.49.1_linux_amd64.tar.gz
+chmod 0755 exo
+EOH
+  }
+}
+
 resource "null_resource" "wait_for_cluster" {
   depends_on = [
     exoscale_sks_cluster.this,
@@ -79,6 +88,10 @@ resource "null_resource" "wait_for_cluster" {
 }
 
 data "external" "kubeconfig" {
+  depends_on = [
+    null_resource.install_exo,
+  ]
+
   program = ["sh", "${path.module}/kubeconfig.sh"]
 
   query = {

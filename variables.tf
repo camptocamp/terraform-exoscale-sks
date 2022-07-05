@@ -1,3 +1,6 @@
+terraform {
+  experiments = [module_variable_optional_attrs]
+}
 variable "name" {
   description = "The name of the SKS cluster."
   type        = string
@@ -15,7 +18,16 @@ variable "kubernetes_version" {
 
 variable "nodepools" {
   description = "The SKS node pools to create."
-  type        = map(any)
+  type = map(object({
+      instance_type      = string
+      size               = number
+      description        = optional(string)
+      instance_prefix    = optional(string)
+      disk_size          = optional(string)
+      private_network_ids = optional(list(string))
+      labels = optional(map(any))
+      taints = optional(map(any))
+  }))
 }
 
 variable "wait_for_cluster_cmd" {

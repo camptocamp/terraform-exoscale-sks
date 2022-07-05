@@ -50,13 +50,13 @@ resource "exoscale_sks_nodepool" "this" {
   zone            = var.zone
   cluster_id      = exoscale_sks_cluster.this.id
   name            = each.key
-  description     = lookup(each.value, "description", "")
+  description     = each.value.description != null ? each.value.description : ""
   instance_type   = each.value.instance_type
-  instance_prefix = lookup(each.value, "instance_prefix", "pool")
-  disk_size       = lookup(each.value, "disk_size", "50")
+  instance_prefix = each.value.instance_prefix != null ? each.value.instance_prefix : "pool"
+  disk_size       = each.value.disk_size != null ? each.value.disk_size : "50"
   size            = each.value.size
-  labels          = lookup(each.value, "labels", {})
-  taints          = lookup(each.value, "taints", {})
+  labels          = each.value.labels != null ? each.value.labels : {}
+  taints          = each.value.taints != null ? each.value.taints : {}
 
   anti_affinity_group_ids = [exoscale_affinity.this[each.key].id]
   security_group_ids      = [exoscale_security_group.this.id]

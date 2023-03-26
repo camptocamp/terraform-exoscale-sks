@@ -13,6 +13,12 @@ variable "kubernetes_version" {
   type        = string
 }
 
+variable "exoscale_ccm" {
+  description = "Deploy the Exoscale Cloud Controller Manager in the control plane. Default to true."
+  type        = string
+  default     = true
+}
+
 variable "nodepools" {
   description = "The SKS node pools to create."
   type        = map(any)

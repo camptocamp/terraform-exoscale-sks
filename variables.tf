@@ -19,6 +19,12 @@ variable "exoscale_ccm" {
   default     = true
 }
 
+variable "metrics_server" {
+  description = "Deploy the Metrics server Default to true."
+  type        = string
+  default     = true
+}
+
 variable "nodepools" {
   description = "The SKS node pools to create."
   type        = map(any)

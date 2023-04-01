@@ -1,8 +1,9 @@
 resource "exoscale_sks_cluster" "this" {
-  zone         = var.zone
-  name         = var.name
-  version      = var.kubernetes_version
-  exoscale_ccm = var.exoscale_ccm
+  zone           = var.zone
+  name           = var.name
+  version        = var.kubernetes_version
+  exoscale_ccm   = var.exoscale_ccm
+  metrics_server = var.metrics_server
 }
 
 resource "exoscale_affinity" "this" {
